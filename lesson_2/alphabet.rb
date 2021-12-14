@@ -1,4 +1,5 @@
 vowels = Hash.new
+
 i = 0
 ('а'..'я').each do |letter|    
   i += 1

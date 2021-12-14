@@ -1,4 +1,5 @@
 print "Cколько дней в феврале: "
+
 days = gets.chomp
 
 months = {

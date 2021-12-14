@@ -1,4 +1,5 @@
 puts "0 входит в ряд Фибоначчи? y/n"
+
 answer = gets.chomp
 
 num_0 = 0
