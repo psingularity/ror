@@ -33,6 +33,14 @@ class Train
     @station = self.stations[@index_current_station]
   end
 
+  def next_station
+    @next_station = self.stations[@index_current_station+1]
+  end
+
+  def prev_station
+    @prev_station = self.stations[@index_current_station-1]
+  end
+
   def change_station
     puts "Переместиться на следующую станцию (next) / на предыдущую (prev)"
       
@@ -40,7 +48,7 @@ class Train
       if input == "next"  
         if @station != $end_station     
           @index_current_station += 1
-          @station = self.stations[@index_current_station]
+          @station = self.stations[@index_current_station]          
         else 
           puts "Поезд на последней станции"
         end
