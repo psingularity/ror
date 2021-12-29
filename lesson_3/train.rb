@@ -1,69 +1,56 @@
 class Train
 
-  attr_reader :type
-  attr_reader :number
+  attr_reader :type, :number
 
-  attr_accessor :count   
+  attr_accessor :count, :speed
 
-  def initialize(number, type, count, speed = 0, index_current_station = 0)
+  def initialize(number, type, count)
     @number = number
     @type = type
-    @count = count    
+    @count = count 
+  end
+
+  def change_speed(speed)
     @speed = speed
-    @index_current_station = index_current_station
-  end
-
-  def change_speed
-    @speed = gets.chomp
-  end
-
-  def speed
-    puts "Скорость поезда: #{@speed}"
   end
 
   def brake
     @speed = 0
   end  
 
-  def stations    
-    $stations      
+  def add_route(route)
+    @route = route
+    @current_position = 0
   end
 
-  def current_station 
-    @station = self.stations[@index_current_station]
+  def current_station
+    @route.stations[@current_position]
   end
 
-  def next_station
-    @next_station = self.stations[@index_current_station+1]
+  def next_station    
+      puts @route.stations[@current_position+1]
   end
 
-  def prev_station
-    @prev_station = self.stations[@index_current_station-1]
+  def prev_station    
+      puts @route.stations[@current_position-1]
   end
 
-  def change_station
-    puts "Переместиться на следующую станцию (next) / на предыдущую (prev)"
-      
-      input = gets.chomp
-      if input == "next"  
-        if @station != $end_station     
-          @index_current_station += 1
-          @station = self.stations[@index_current_station]          
-        else 
-          puts "Поезд на последней станции"
-        end
+  def change_station_to_next 
+    if current_station != @route.end_station
+      @current_position += 1
+      puts @route.stations[@current_position]
+    else 
+      puts "Поезд прибыл"
+    end
+  end
 
-      elsif input == "prev"
-        if @station != $start_station
-          @index_current_station -= 1
-          @station = self.stations[@index_current_station]
-        else
-          puts "Поезд на первой станции"
-        end
-      else
-        puts "Неверная команда"
-      end        
-    
+  def change_station_to_prev
+    if current_station != @route.start_station
+      @current_position -= 1
+      puts @route.stations[@current_position]
+    else 
+      puts "Поезд прибыл"
+    end     
   end
 
   def coupling_wagons
@@ -81,5 +68,4 @@ class Train
       puts "Поезд движется. Прицеплять/отцеплать вагоны запрещено"
     end
   end
-
 end

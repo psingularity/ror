@@ -1,6 +1,6 @@
 class Station
 
-  attr_accessor :trains
+  attr_reader :trains, :title_station
 
   def initialize(title_station)
     @title_station = title_station
@@ -22,12 +22,11 @@ class Station
         passenger_trains << train.number
       end 
     }
-    puts "Номера грузовых поездов: #{freight_trains}"
-    puts "Номера пассажирских поездов: #{passenger_trains}"
+    puts "Количество грузовых поездов: #{freight_trains.length}"
+    puts "Количество пассажирских поездов: #{passenger_trains.length}"
   end
 
   def departure_train(train)
     @trains.delete(train)
   end
-
 end
