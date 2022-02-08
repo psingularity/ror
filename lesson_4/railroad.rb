@@ -222,16 +222,6 @@ def submenu
 
   end 
 
-  def all_routes_train
-    i = 1
-    routes.each do |route|
-      puts "#{i}. "
-      puts route.start_station.title_station
-      puts route.end_station.title_station
-      i += 1
-    end    
-  end
-
   def all_stations_way
     i = 1
     stations.each do |station|
@@ -264,7 +254,7 @@ def submenu
   def add_way_station
     system 'clear'
     puts 'Выберите маршрут, в который хотите добавить промежуточную станцию:'
-    all_routes_train
+    all_routes
     puts "-----------------------"
     route_number = gets.chomp.to_i - 1
     puts 'Введите номер промежуточной станции:'
@@ -285,7 +275,7 @@ def submenu
   def remove_way_station
     system 'clear'
     puts 'Выберите маршрут, из которого хотите удалить промежуточную станцию:'
-    all_routes_train
+    all_routes
     puts "-----------------------"
     route_number = gets.chomp.to_i - 1
     puts 'Введите номер промежуточной станции:'
