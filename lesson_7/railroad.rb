@@ -302,32 +302,24 @@ def submenu
     
     train_number_brake
 
+    puts "Сколько вагонов хотите присоединить:"
+    w_count = gets.chomp.to_i 
+
+    puts "Количества мест (общий объем) одного вагона:"
+    total_volume = gets.chomp.to_i 
+
     if trains[@train_number].type == "грузовой" 
-      puts "Сколько вагонов хотите присоединить:"
-      @w_count = gets.chomp.to_i      
-
-      puts "Задайте общий объем вагона:"
-      total_volume = gets.chomp.to_i
-
-      @w_count.times { 
+      w_count.times { 
         trains[@train_number].add_wagon(CargoWagon.new(total_volume)) 
       } 
-      puts trains[@train_number].wagons
+    else
+      w_count.times { 
+        trains[@train_number].add_wagon(PassengerWagon.new(total_volume)) 
+      } 
     end
 
-    if trains[@train_number].type == "пассажирский"      
-
-      puts "Сколько вагонов хотите присоединить:"
-      @w_count = gets.chomp.to_i
-
-      puts "Задайте общее количество мест в вагоне:"
-      total_number_seats = gets.chomp.to_i
-
-      @w_count.times { trains[@train_number].add_wagon(PassengerWagon.new(total_number_seats)) } 
-
-      puts "Сколько вагонов стало:"
-      puts trains[@train_number].wagons
-    end  
+    puts "Сколько вагонов стало:"
+    puts trains[@train_number].wagons
 
   end
 
@@ -337,30 +329,17 @@ def submenu
 
     train_number_brake
 
-    if trains[@train_number].type == "грузовой" 
+    puts "Количество вагонов поезда"
+    puts trains[@train_number].wagons
 
-      puts "Количество вагонов поезда"
-      puts trains[@train_number].wagons
+    puts "Сколько вагонов хотите отсоединить:"
+    w_count = gets.chomp.to_i 
 
-      puts "Сколько вагонов хотите отсоединить:"
-      @w_count = gets.chomp.to_i 
+    w_count.times { trains[@train_number].remove_wagon } 
 
-      @w_count.times { trains[@train_number].remove_wagon } 
-    end
+    puts "Сколько вагонов стало:"
+    puts trains[@train_number].wagons
 
-    if trains[@train_number].type == "пассажирский"
-
-      puts "Количество вагонов поезда"
-      puts trains[@train_number].wagons
-
-      puts "Сколько вагонов хотите отсоединить:"
-      @w_count = gets.chomp.to_i 
-
-      @w_count.times { trains[@train_number].remove_wagon } 
-
-      puts "Сколько вагонов стало:"
-      puts trains[@train_number].wagons
-    end
   end
 
   def train_forward
@@ -412,11 +391,7 @@ def submenu
       wagon_number = gets.chomp.to_i
       puts 'Количество занимаемых мест/объема:'
       volume = gets.chomp.to_i
-      if trains[train_number].type == 'пассажирский'
-        volume.times { trains[train_number].select_wagon(wagon_number).take_seat }
-      else
-        volume.times {trains[train_number].select_wagon(wagon_number).take_volume }
-      end      
+      volume.times {trains[train_number].select_wagon(wagon_number).take_volume }    
     end  
   end
 
@@ -424,11 +399,8 @@ def submenu
     puts "#{train.number}, тип: #{train.type}, количество вагонов: #{train.wagons.length}"
     puts "-------------------------"
     train.wagons_on_train do |wagon|
-      if wagon.type == 'пассажирский'            
-        puts "Вагон №#{wagon.number}, тип: #{wagon.type}, свободно мест: #{wagon.free_seats}, занято мест: #{wagon.occupied_seats}"
-      else 
-        puts "Вагон №#{wagon.number}, тип: #{wagon.type}, свободно объема: #{wagon.free_volume}, занято объема: #{wagon.occupied_volume}"
-      end
+      puts "Вагон №#{wagon.number}, тип: #{wagon.type}, свободно: #{wagon.free_volume}, занято: #{wagon.occupied_volume}"
+    
     end
   end
 

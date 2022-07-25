@@ -1,25 +1,16 @@
 class PassengerWagon < Wagon
 
-  attr_reader :total_number_seats, :occupied_seats
+  @@number = 1
 
-  def initialize(total_number_seats)    
+  def initialize(total_volume)  
+    @number = @@number
+    @@number += 1  
+    super
     @type = "пассажирский"
-    @total_number_seats = total_number_seats
-    @occupied_seats = 0
-    super()
   end
 
-  def take_seat
-    self.occupied_seats += 1 if occupied_seats < total_number_seats
+  def take_volume
+    self.occupied_volume += 1 if occupied_volume < total_volume
   end
 
-  def free_seats
-    total_number_seats - occupied_seats
-  end
-
-
-  protected
-
-  attr_writer :total_number_seats, :occupied_seats
-  
 end
